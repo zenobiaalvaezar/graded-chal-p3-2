@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+package book;
+
+option go_package = "gobook/proto;proto";
+
+// Service Definition
+service BookService {
+  rpc RegisterUser (RegisterUserRequest) returns (RegisterUserResponse);
+  rpc LoginUser (LoginUserRequest) returns (LoginUserResponse);
+  rpc AddBook (AddBookRequest) returns (AddBookResponse);
+  rpc BorrowBook (BorrowBookRequest) returns (BorrowBookResponse);
+  rpc ReturnBook(ReturnBookRequest) returns (ReturnBookResponse);
+  rpc DeleteBook (DeleteBookRequest) returns (DeleteBookResponse);
+  rpc UpdateBook (UpdateBookRequest) returns (UpdateBookResponse);
+  rpc ListBooks (ListBooksRequest) returns (ListBooksResponse);
+}
+
+// User-related messages
+message User {
+  string id = 1;
+  string username = 2;
+  string password = 3;
+}
+
+message RegisterUserRequest {
+  User user = 1;
+}
+
+message RegisterUserResponse {
+  string message = 1;
+}
+
+message LoginUserRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message LoginUserResponse {
+  string token = 1;
+}
+
+// Book-related messages
+message Book {
+  string id = 1;
+  string title = 2;
+  string author = 3;
+  string published_date = 4;
+  string status = 5;
+}
+
+message AddBookRequest {
+  Book book = 1;
+}
+
+message AddBookResponse {
+  string message = 1;
+}
+
+message BorrowBookRequest {
+  string borrow_id = 1; // Unique ID for borrowing transaction
+  string book_id = 2;   // ID of the book being borrowed
+  string user_id = 3;   // ID of the user borrowing the book
+}
+
+message BorrowBookResponse {
+  string message = 1;
+}
+message ReturnBookRequest {
+  string borrow_id = 1;
+  string book_id = 2;
+  string user_id = 3;
+}
+
+message ReturnBookResponse {
+  string message = 1;
+}
+
+
+message DeleteBookRequest {
+  string id = 1;
+}
+
+message DeleteBookResponse {
+  string message = 1;
+}
+
+message UpdateBookRequest {
+  Book book = 1;
+}
+
+message UpdateBookResponse {
+  string message = 1;
+}
+
+message ListBooksRequest {
+  string user_id = 1;
+}
+
+message ListBooksResponse {
+  repeated Book books = 1;
+}
